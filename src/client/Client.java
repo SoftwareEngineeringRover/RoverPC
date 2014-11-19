@@ -31,18 +31,24 @@ public class Client {
         String serverAddress = JOptionPane.showInputDialog(
                 "Enter IP Address of a machine that is\n"
                 + "running the date service on port 9090:");
-        Socket s;
-        while (true) {
+        Socket s=null;
+        boolean done = false;
+        PrintWriter out;
+         BufferedReader in;
+        while (!done) {
             try {
                 s = new Socket(serverAddress, 9090);
-                BufferedReader input
-                        = new BufferedReader(new InputStreamReader(s.getInputStream()));
-                String answer = input.readLine();
-                System.out.println(answer);
-                System.exit(0);
+                done = true;
             } catch (ConnectException e) {
                 System.out.println("Wait for servor...");
             }
+        }
+
+        while (true) {
+            in= new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new PrintWriter(s.getOutputStream(), true);
+            String answer = in.readLine();
+            System.out.println(answer);
         }
     }
 }
