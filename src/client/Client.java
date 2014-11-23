@@ -5,20 +5,16 @@
  */
 package client;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 /**
  * A simple Swing-based client for the capitalization server. It has a main
@@ -28,27 +24,40 @@ import javax.swing.JTextField;
 public class Client {
 
     public static void main(String[] args) throws IOException {
-        String serverAddress = JOptionPane.showInputDialog(
+        String serverAddress = null;
+        serverAddress = JOptionPane.showInputDialog(
                 "Enter IP Address of a machine that is\n"
                 + "running the date service on port 9090:");
-        Socket s=null;
+        Socket s = null;
         boolean done = false;
-        PrintWriter out;
-         BufferedReader in;
-        while (!done) {
-            try {
-                s = new Socket(serverAddress, 9090);
-                done = true;
-            } catch (ConnectException e) {
-                System.out.println("Wait for servor...");
+        PrintWriter out = null;
+        BufferedReader in = null;
+        String n = "hi";
+        try {
+            while (!done) {
+                try {
+                    if (serverAddress.equals("") || serverAddress == null) {
+                        throw new UnknownHostException();
+                    }
+                    s = new Socket(serverAddress, 9090);
+                    done = true;
+                } catch (ConnectException e) {
+                    System.out.println("Wait for servor...");
+                }
             }
-        }
+            while (true) {
+                in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+                out = new PrintWriter(s.getOutputStream(), true);
+                out.print(n);
+                String answer = in.readLine();
+                System.out.println(answer);
+            }
 
-        while (true) {
-            in= new BufferedReader(new InputStreamReader(s.getInputStream()));
-            out = new PrintWriter(s.getOutputStream(), true);
-            String answer = in.readLine();
-            System.out.println(answer);
+        } catch (UnknownHostException e) {
+            System.exit(0);
+        } catch (SocketException e) {
+            s.close();
+            System.exit(0);
         }
     }
 }
