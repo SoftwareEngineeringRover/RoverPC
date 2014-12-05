@@ -5,12 +5,9 @@
  */
 package communication;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
@@ -31,20 +28,16 @@ public class Client extends Thread {
     ObjectOutputStream out = null;
     Socket s = null;
     boolean done = false;
-    String message;
 
     public static void main(String[] args) throws IOException, SocketException {
         String serverAddress = JOptionPane.showInputDialog(
                 "Enter IP Address of a machine that is\n"
                 + "running the date service on port 9090:");
-        String message = JOptionPane.showInputDialog(
-                "Enter Message:\n");
-        Client c = new Client(serverAddress, message);
+        Client c = new Client(serverAddress);
         c.run();
     }
 
-    public Client(String serverAddress, String message) throws UnknownHostException, IOException {
-        this.message = message;
+    public Client(String serverAddress) throws UnknownHostException, IOException {
         while (!done) {
             try {
                 if (serverAddress.equals("")) {
@@ -52,7 +45,6 @@ public class Client extends Thread {
                 }
                 s = new Socket(serverAddress, 9090);
                 in = new ObjectInputStream(s.getInputStream());
-                out = new ObjectOutputStream(s.getOutputStream());
                 done = true;
             } catch (ConnectException e) {
                 System.out.println("Wait for servor...");
@@ -63,7 +55,6 @@ public class Client extends Thread {
     public void run() {
         while (true) {
             try {
-                sendMessage();
                 getInput();
                 Thread.sleep(100);
             } catch (IOException ex) {
@@ -76,12 +67,8 @@ public class Client extends Thread {
         }
     }
 
-    public synchronized void sendMessage() throws IOException {
-        out.writeObject(message);
-    }
-
-    public synchronized void getInput() throws IOException, ClassNotFoundException {
-        System.out.print(in.readObject().toString());
+    public void getInput() throws IOException, ClassNotFoundException {
+        System.out.print((String)in.readObject());
     }
 
     public void close() throws IOException {
