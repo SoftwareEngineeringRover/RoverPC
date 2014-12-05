@@ -1,7 +1,7 @@
 /*
  * and open the template in the editor.
  */
-package roverpc;
+package camera;
 
 import com.github.sarxos.webcam.*;
 import java.awt.image.BufferedImage;
