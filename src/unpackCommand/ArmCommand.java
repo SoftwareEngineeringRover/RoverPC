@@ -32,15 +32,18 @@ public class ArmCommand {
     
     public void setArmMovement(String target, String movement){
         //setArmMovement
-        //elbow        
+        //elbow     
+        System.out.print("Rover " +target+" move "+movement);
     }
     
     public void setArmMovement(String target, String movement, String rotation){
         //setArmMovement
         //shoulder and wrist
+        System.out.print("Rover " +target+" move "+movement+" rotate "+ rotation);
     }
     
     public void setCrow(String crow){
         //setCrow
+        System.out.println(crow.equals("true")?"Close":"Open");
     }
 }
