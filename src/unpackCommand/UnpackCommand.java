@@ -3,20 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package unpackControllers;
+package unpackCommand;
+
+import camera.Camera;
 
 /**
  *
  * @author junxin
  */
-public class ControllerCommand {
+public class UnpackCommand {
 
     MotorCommand mc;
     ArmCommand ac;
+    Camera camera;
 
-    public ControllerCommand() {
+    public UnpackCommand(Camera c) {
         mc = new MotorCommand();
         ac = new ArmCommand();
+        camera=c;
     }
 
     public void sendCommand(String c) {
@@ -27,6 +31,9 @@ public class ControllerCommand {
                 break;
             case "1":
                 ac.sendCommand(commands);
+                break;
+            case "2":
+                camera.setSendCamList(commands);
                 break;
         }
     }
