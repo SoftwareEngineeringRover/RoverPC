@@ -5,6 +5,7 @@
  */
 package communication;
 
+import camera.ImageBuffer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
+import unpackCommand.UnpackCommand;
 
 /**
  * A simple Swing-based client for the capitalization server. It has a main
@@ -30,20 +32,23 @@ public class RoverClient extends Thread{
     Socket s = null;
     boolean done = false;
     String serverAddress;
+    UnpackCommand uc;
+    ImageBuffer ib;
 
     public static void main(String[] args){
         String serverAddress = JOptionPane.showInputDialog(
                 "Enter IP Address of a machine that is\n"
                 + "running the date service on port 9090:");
         try {
-            RoverClient c = new RoverClient(serverAddress);
+            RoverClient c = new RoverClient(serverAddress, null);
         } catch (IOException ex) {
             Logger.getLogger(RoverClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public RoverClient(String serverAddress) throws UnknownHostException, IOException{
+    public RoverClient(String serverAddress, ImageBuffer ib) throws UnknownHostException, IOException{
         this.serverAddress=serverAddress;
+        this.ib=ib;
     }
     
     @Override
@@ -67,7 +72,8 @@ public class RoverClient extends Thread{
         
         while(true){
             try {
-                System.out.println(input.readLine());
+                //System.out.println(input.readLine());
+                uc.sendCommand(input.readLine());
             } catch (IOException ex) {
                 Logger.getLogger(RoverClient.class.getName()).log(Level.SEVERE, null, ex);
             }

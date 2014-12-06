@@ -51,5 +51,9 @@ public class ImageBuffer {
         sendCamList[0]=Integer.parseInt(list[1]);
         sendCamList[1]=Integer.parseInt(list[2]);
     }
+     
+     public boolean isOpen(){
+         return webcam.isOpen();
+     }
     
 }
