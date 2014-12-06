@@ -22,7 +22,7 @@ public class RoverServer implements Runnable {
 
     Socket socket = null;
     ServerSocket listener = null;
-    private PrintWriter out;
+    ObjectOutputStream out;
     ImageBuffer ib;
     RoverClient client;
 
@@ -54,10 +54,10 @@ public class RoverServer implements Runnable {
             socket = listener.accept();
             System.out.println("Client accept");
             
-            out =new PrintWriter(socket.getOutputStream(), true);
+            out =new ObjectOutputStream(socket.getOutputStream());
             while(true){
                 //out.printf("", ib.getImage(),ib.getImage2());
-                out.println(ib.getImage());
+                out.writeObject(ib.getImage());
                 Thread.sleep(100);
             }
         } catch (IOException ex) {
