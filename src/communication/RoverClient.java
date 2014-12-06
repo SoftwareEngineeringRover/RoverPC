@@ -24,24 +24,30 @@ import javax.swing.JOptionPane;
  * frame window with a text field for entering strings and a textarea to see the
  * results of capitalizing them.
  */
-public class Client {
+public class RoverClient extends Thread{
 
     BufferedReader input;
     Socket s = null;
     boolean done = false;
+    String serverAddress;
 
     public static void main(String[] args){
         String serverAddress = JOptionPane.showInputDialog(
                 "Enter IP Address of a machine that is\n"
                 + "running the date service on port 9090:");
         try {
-            Client c = new Client(serverAddress);
+            RoverClient c = new RoverClient(serverAddress);
         } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RoverClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public Client(String serverAddress) throws UnknownHostException, IOException{
+    public RoverClient(String serverAddress) throws UnknownHostException, IOException{
+        this.serverAddress=serverAddress;
+    }
+    
+    @Override
+    public void run(){
         while (!done) {
             try {
                 if (serverAddress.equals("")) {
@@ -52,11 +58,19 @@ public class Client {
                 done = true;
             } catch (ConnectException e) {
                 System.out.println("Wait for servor...");
+            } catch (UnknownHostException ex) {
+                System.out.println("Un known Host Exception Occur...");
+            } catch (IOException ex) {
+                Logger.getLogger(RoverClient.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
         while(true){
-            System.out.println(input.readLine());
+            try {
+                System.out.println(input.readLine());
+            } catch (IOException ex) {
+                Logger.getLogger(RoverClient.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

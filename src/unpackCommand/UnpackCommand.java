@@ -5,7 +5,7 @@
  */
 package unpackCommand;
 
-import camera.Camera;
+import camera.ImageBuffer;
 
 /**
  *
@@ -15,9 +15,9 @@ public class UnpackCommand {
 
     MotorCommand mc;
     ArmCommand ac;
-    Camera camera;
+    ImageBuffer camera;
 
-    public UnpackCommand(Camera c) {
+    public UnpackCommand(ImageBuffer c) {
         mc = new MotorCommand();
         ac = new ArmCommand();
         camera=c;

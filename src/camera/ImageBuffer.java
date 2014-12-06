@@ -16,39 +16,40 @@ import javax.swing.ImageIcon;
  * @author junxin
  */
 public class ImageBuffer {
-    static List<Webcam> camList = Webcam.getWebcams();
-    static Webcam webcam = camList.get(0);
-    static Webcam webcam2 = camList.get(1);
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
+    List<Webcam> camList;
+    Webcam webcam;
+    Webcam webcam2;
+    int[] sendCamList=new int[2];
+    
+    public ImageBuffer(){
+        camList = Webcam.getWebcams();
+        webcam = camList.get(0);
+        webcam2 = camList.get(1);
         webcam.open(); //rover
         webcam2.open(); //rover
-        while (true)
-        {
-            
-        }
     }
     
-    public static BufferedImage getImage()
+    public BufferedImage getImage()
     {
         BufferedImage img = webcam.getImage(); //rover
         return img;
     }
     
-    public static BufferedImage getImage2()
+    public BufferedImage getImage2()
     {
         BufferedImage img2 = webcam2.getImage(); //rover
         return img2;
     }
     
-    public static void closeCamera()
+    public void closeCamera()
     {
         webcam.close();
         webcam2.close();
+    }
+    
+     public void setSendCamList(String[] list){
+        sendCamList[0]=Integer.parseInt(list[1]);
+        sendCamList[1]=Integer.parseInt(list[2]);
     }
     
 }
