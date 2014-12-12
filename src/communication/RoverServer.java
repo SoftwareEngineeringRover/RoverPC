@@ -35,7 +35,7 @@ public class RoverServer implements Runnable {
             ImageBuffer ib = new ImageBuffer();
             RoverServer server = new RoverServer(ib);
             new Thread(server).start();
-            RoverClient client = new RoverClient("150.250.220.214", ib);
+            RoverClient client = new RoverClient("150.250.220.246", ib);
             client.start();
         } catch (IOException ex) {
             Logger.getLogger(RoverServer.class.getName()).log(Level.SEVERE, null, ex);
@@ -55,6 +55,7 @@ public class RoverServer implements Runnable {
     @Override
     public void run() {
         try {
+            System.out.println("Server start...");
             socket = listener.accept();
             System.out.println("Client accept");
 
@@ -63,7 +64,8 @@ public class RoverServer implements Runnable {
                 //out.printf("", ib.getImage(),ib.getImage2());
                 //out.writeObject(ib.getImage());
                 BufferedImage bi=ib.getImage();
-                System.out.println(bi.toString());
+            
+                //System.out.println(bi.toString());
                 ImageIO.write(bi, "JPG", socket.getOutputStream());
             }
         } catch (IOException ex) {

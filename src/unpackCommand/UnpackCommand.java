@@ -35,6 +35,7 @@ public class UnpackCommand {
             case "2":
                 camera.setSendCamList(commands);
                 break;
+                //set default catch error
         }
     }
 }

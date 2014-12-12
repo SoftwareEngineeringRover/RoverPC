@@ -18,13 +18,16 @@ public class ArmCommand {
         String crow=c[4];
         
         switch(target){
-            case "shouder":
+            case "shoulder":
+                setArmMovement(target, movement,rotation);
+                break;
             case "wrist":
                 setArmMovement(target, movement,rotation);
                 break;
             case "elbow":
                 setArmMovement(target, movement);
                 break;
+                //add default for error check
         }
         
         setCrow(crow);

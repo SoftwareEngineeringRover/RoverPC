@@ -20,9 +20,11 @@ public class MotorCommand {
     
     public void setMotorSpeed(int speed){
         //set robot motor speed
+        System.out.print("Motor speed:"+speed );
     }
     
     public void setDegree(int degree){
         //set robot degree
+        System.out.println(",Motor degree"+degree );
     }
 }

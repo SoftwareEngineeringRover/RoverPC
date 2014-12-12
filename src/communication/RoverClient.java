@@ -49,6 +49,7 @@ public class RoverClient extends Thread{
     public RoverClient(String serverAddress, ImageBuffer ib) throws UnknownHostException, IOException{
         this.serverAddress=serverAddress;
         this.ib=ib;
+        uc=new UnpackCommand(ib);
     }
     
     @Override
@@ -72,8 +73,9 @@ public class RoverClient extends Thread{
         
         while(true){
             try {
-                //System.out.println(input.readLine());
-                uc.sendCommand(input.readLine());
+                String info=input.readLine();
+                //System.out.println(info);
+                uc.sendCommand(info);
             } catch (IOException ex) {
                 Logger.getLogger(RoverClient.class.getName()).log(Level.SEVERE, null, ex);
             }
