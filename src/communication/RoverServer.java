@@ -1,26 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package communication;
 
 import camera.ImageBuffer;
 import java.awt.image.BufferedImage;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import unpackCommand.UnpackCommand;
 
 /**
- *
- * @author junxin
+ * Sends images to User client
+ * @author Jun,Ed,Matt,Dan,Dakota,Zhen
  */
 public class RoverServer implements Runnable {
 
@@ -30,12 +21,17 @@ public class RoverServer implements Runnable {
     ImageBuffer ib;
     RoverClient client;
 
+    /**
+     * Creates server, starts Rover client and
+     * server connects to UserClient
+     * @param arg 
+     */
     public static void main(String arg[]) {
         try {
             ImageBuffer ib = new ImageBuffer();
             RoverServer server = new RoverServer(ib);
             new Thread(server).start();
-            RoverClient client = new RoverClient("150.250.220.246", ib);
+            RoverClient client = new RoverClient("150.250.218.175", ib);
             client.start();
         } catch (IOException ex) {
             Logger.getLogger(RoverServer.class.getName()).log(Level.SEVERE, null, ex);
@@ -52,20 +48,18 @@ public class RoverServer implements Runnable {
 
     }
 
+    /**
+     * Starts the server then starts to
+     * continuously send images
+     */
     @Override
     public void run() {
         try {
             System.out.println("Server start...");
             socket = listener.accept();
-            System.out.println("Client accept");
-
-            //out = new DataOutputStream(socket.getOutputStream());
+            System.out.println("Client accepted");
             while (true) {
-                //out.printf("", ib.getImage(),ib.getImage2());
-                //out.writeObject(ib.getImage());
                 BufferedImage bi=ib.getImage();
-            
-                //System.out.println(bi.toString());
                 ImageIO.write(bi, "JPG", socket.getOutputStream());
             }
         } catch (IOException ex) {
