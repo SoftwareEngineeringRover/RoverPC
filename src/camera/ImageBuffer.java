@@ -16,7 +16,7 @@ public class ImageBuffer {
     List<Webcam> camList;
     Webcam webcam;
     Webcam webcam2;
-    int[] sendCamList = {0, 1};
+    int[] sendCamList = {0, 0};
     //future sendCamList={0,1};
 
     public ImageBuffer() {
