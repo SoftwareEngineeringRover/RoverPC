@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package unpackCommand;
 
 import camera.ImageBuffer;
 
 /**
- *
- * @author junxin
+ * Sends Motor and Arm commands accordingly
+ * @author Jun
  */
 public class UnpackCommand {
 
@@ -17,12 +12,20 @@ public class UnpackCommand {
     ArmCommand ac;
     ImageBuffer camera;
 
+    /**
+     * creates commands
+     * @param c 
+     */
     public UnpackCommand(ImageBuffer c) {
         mc = new MotorCommand();
         ac = new ArmCommand();
         camera=c;
     }
 
+    /**
+     * Sends commands to correct class
+     * @param c 
+     */
     public void sendCommand(String c) {
         String[] commands = c.split(" ");
         switch (commands[0]) {

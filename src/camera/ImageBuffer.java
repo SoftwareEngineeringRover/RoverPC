@@ -21,6 +21,7 @@ public class ImageBuffer {
 
     public ImageBuffer() {
         camList = Webcam.getWebcams();
+        System.out.println(camList.size());
         webcam = camList.get(sendCamList[0]);
         webcam2 = camList.get(sendCamList[1]);
         for(Webcam w:camList){

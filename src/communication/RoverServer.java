@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package communication;
 
 import camera.ImageBuffer;
@@ -21,8 +16,8 @@ import javax.imageio.ImageIO;
 import sun.misc.BASE64Encoder;
 
 /**
- *
- * @author junxin
+ * Sends images to User client
+ * @author Jun,Ed,Matt,Dan,Dakota,Zhen
  */
 public class RoverServer implements Runnable {
 
@@ -33,6 +28,11 @@ public class RoverServer implements Runnable {
     RoverClient client;
     private PrintWriter out;
 
+    /**
+     * Creates server, starts Rover client and
+     * server connects to UserClient
+     * @param arg 
+     */
     public static void main(String arg[]) {
         try {
             ImageBuffer ib = new ImageBuffer();
@@ -55,6 +55,10 @@ public class RoverServer implements Runnable {
 
     }
 
+    /**
+     * Starts the server then starts to
+     * continuously send images
+     */
     @Override
     public void run() {
         try {

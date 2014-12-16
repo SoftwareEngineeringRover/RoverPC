@@ -1,19 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package communication;
 
 import camera.ImageBuffer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +27,10 @@ public class RoverClient extends Thread{
     UnpackCommand uc;
     ImageBuffer ib;
 
+    /**
+     * Starts the Rover client
+     * @param args 
+     */
     public static void main(String[] args){
         String serverAddress = JOptionPane.showInputDialog(
                 "Enter IP Address of a machine that is\n"
@@ -52,6 +48,10 @@ public class RoverClient extends Thread{
         uc=new UnpackCommand(ib);
     }
     
+    /**
+     * Constantly accepts commands from the User Server
+     * Sends out said commands to necessary classes.
+     */
     @Override
     public void run(){
         while (!done) {
@@ -63,9 +63,9 @@ public class RoverClient extends Thread{
                 input =new BufferedReader(new InputStreamReader(s.getInputStream()));
                 done = true;
             } catch (ConnectException e) {
-                System.out.println("Wait for servor...");
+                System.out.println("Waiting for server...");
             } catch (UnknownHostException ex) {
-                System.out.println("Un known Host Exception Occur...");
+                System.out.println("An Unknown Host Exception has Occurred...");
             } catch (IOException ex) {
                 Logger.getLogger(RoverClient.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -74,7 +74,6 @@ public class RoverClient extends Thread{
         while(true){
             try {
                 String info=input.readLine();
-                //System.out.println(info);
                 uc.sendCommand(info);
             } catch (IOException ex) {
                 Logger.getLogger(RoverClient.class.getName()).log(Level.SEVERE, null, ex);
@@ -82,6 +81,10 @@ public class RoverClient extends Thread{
         }
     }
 
+    /**
+     * stops the client 
+     * @throws IOException 
+     */
     public void close() throws IOException {
         input.close();
         s.close();

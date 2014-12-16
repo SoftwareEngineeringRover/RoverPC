@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package unpackCommand;
 
 /**
- *
- * @author junxin
+ * Accepts Motor Commands of Motor Speed and degree
+ * @author Jun
  */
 public class MotorCommand {
     
@@ -18,13 +13,19 @@ public class MotorCommand {
         setDegree(degree);
     }
     
+    /**
+     * Sets the robots motor speed
+     * @param speed 
+     */
     public void setMotorSpeed(int speed){
-        //set robot motor speed
         System.out.print("Motor speed:"+speed );
     }
     
+    /**
+     * Sets the robot motors degree
+     * @param degree 
+     */
     public void setDegree(int degree){
-        //set robot degree
         System.out.println(",Motor degree"+degree );
     }
 }
