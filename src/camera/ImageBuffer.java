@@ -47,7 +47,6 @@ public class ImageBuffer {
     public void setSendCamList(String[] list) {
         int num1=Integer.parseInt(list[1]);
         int num2=Integer.parseInt(list[2]);
-        System.out.println(num1+" "+num2);
         //future
         if(num1!=sendCamList[0]&&num1<camList.size()){
             webcam=null;
