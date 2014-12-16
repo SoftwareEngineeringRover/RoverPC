@@ -38,7 +38,7 @@ public class RoverServer implements Runnable {
             ImageBuffer ib = new ImageBuffer();
             RoverServer server = new RoverServer(ib);
             new Thread(server).start();
-            RoverClient client = new RoverClient("150.250.221.2", ib);
+            RoverClient client = new RoverClient("150.250.220.119", ib);
             client.start();
         } catch (IOException ex) {
             Logger.getLogger(RoverServer.class.getName()).log(Level.SEVERE, null, ex);

@@ -23,8 +23,9 @@ public class ImageBuffer {
         camList = Webcam.getWebcams();
         webcam = camList.get(sendCamList[0]);
         webcam2 = camList.get(sendCamList[1]);
-        webcam.open(); //rover
-        webcam2.open(); //rover
+        for(Webcam w:camList){
+            w.open();
+        }
     }
 
     public BufferedImage getImage() {
@@ -43,20 +44,19 @@ public class ImageBuffer {
     }
 
     public void setSendCamList(String[] list) {
-        int num1=Integer.parseInt(list[0]);
-        int num2=Integer.parseInt(list[1]);
+        int num1=Integer.parseInt(list[1]);
+        int num2=Integer.parseInt(list[2]);
+        System.out.println(num1+" "+num2);
         //future
         if(num1!=sendCamList[0]&&num1<camList.size()){
-            webcam.close();
             webcam=null;
+            sendCamList[0]=num1;
             webcam=camList.get(num1);
-            webcam.open();
         }
         if(num2!=sendCamList[1]&&num2<camList.size()){
-            webcam2.close();
             webcam2=null;
+            sendCamList[1]=num2;
             webcam2=camList.get(num2);
-            webcam2.open();
         }
     }
 
