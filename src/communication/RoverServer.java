@@ -1,5 +1,6 @@
 package communication;
 
+import Decoder.BASE64Encoder;
 import camera.ImageBuffer;
 import com.github.sarxos.webcam.WebcamLockException;
 import java.awt.image.BufferedImage;
@@ -15,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
-import sun.misc.BASE64Encoder;
 
 /**
  * Sends images to User client
