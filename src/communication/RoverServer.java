@@ -1,6 +1,7 @@
 package communication;
 
 import camera.ImageBuffer;
+import com.github.sarxos.webcam.WebcamLockException;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.ByteArrayOutputStream;
@@ -13,10 +14,12 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import sun.misc.BASE64Encoder;
 
 /**
  * Sends images to User client
+ *
  * @author Jun,Ed,Matt,Dan,Dakota,Zhen
  */
 public class RoverServer implements Runnable {
@@ -29,35 +32,33 @@ public class RoverServer implements Runnable {
     private PrintWriter out;
 
     /**
-     * Creates server, starts Rover client and
-     * server connects to UserClient
-     * @param arg 
+     * Creates server, starts Rover client and server connects to UserClient
+     *
+     * @param arg
      */
     public static void main(String arg[]) {
         try {
             ImageBuffer ib = new ImageBuffer();
             RoverServer server = new RoverServer(ib);
             new Thread(server).start();
-            RoverClient client = new RoverClient("150.250.220.119", ib);
+            String ipAddress = JOptionPane.showInputDialog(null,
+                    "Please enter server IP", "150.250.220.119");
+            RoverClient client = new RoverClient(ipAddress, ib);
             client.start();
         } catch (IOException ex) {
             Logger.getLogger(RoverServer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (WebcamLockException e) {
+            System.out.println("Cameras locked by other application!");
         }
     }
 
-    public RoverServer(ImageBuffer ib) {
+    public RoverServer(ImageBuffer ib) throws IOException {
         this.ib = ib;
-        try {
-            listener = new ServerSocket(9090);
-        } catch (IOException ex) {
-            Logger.getLogger(RoverServer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        listener = new ServerSocket(9090);
     }
 
     /**
-     * Starts the server then starts to
-     * continuously send images
+     * Starts the server then starts to continuously send images
      */
     @Override
     public void run() {

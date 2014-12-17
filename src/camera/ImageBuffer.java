@@ -19,7 +19,7 @@ public class ImageBuffer {
     int[] sendCamList = {0, 0};
     //future sendCamList={0,1};
 
-    public ImageBuffer() {
+    public ImageBuffer() throws WebcamLockException{
         camList = Webcam.getWebcams();
         System.out.println(camList.size());
         webcam = camList.get(sendCamList[0]);
